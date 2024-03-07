@@ -1,0 +1,29 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    @apply box-border list-none p-0 m-0 scroll-smooth;
+  }
+  body {
+    @apply bg-slate-900 text-white min-h-screen;
+  }
+}
+
+@layer utilities {
+  .main-container {
+    @apply flex flex-col items-center justify-center max-w-[1200px] w-full mx-auto my-2 min-h-dvh px-2 sm:px-0;
+  }
+  .flex-center {
+    @apply flex justify-center items-center;
+  }
+
+  .flex-between {
+    @apply flex justify-between items-center;
+  }
+
+  .flex-start {
+    @apply flex justify-start items-center;
+  }
+}
