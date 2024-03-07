@@ -1,10 +1,17 @@
+import { RouterProvider } from 'react-router-dom';
+import { router } from './routes/route';
+import AllProviders from './AllProviders';
+import { Suspense } from 'react';
+import Loader from './components/Loader';
 
 const App = () => {
   return (
-    <div className="text-5xl text-rose-400">
-      test
-    </div>
+    <Suspense fallback={<Loader />}>
+      <AllProviders>
+        <RouterProvider router={router} />
+      </AllProviders>
+    </Suspense>
   );
-}
+};
 
 export default App;
