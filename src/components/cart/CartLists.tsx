@@ -8,7 +8,7 @@ import CartListPagination from './CartListPagination';
 import Error from '../Error';
 import Loader from '../Loader';
 
-const CartsList = () => {
+const CartLists = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const { isLoading, isError, carts, limit, total } = useCarts(currentPage);
 
@@ -38,10 +38,11 @@ const CartsList = () => {
   };
 
   if (isLoading) {
-    <Loader type="spinner" />;
+    return <Loader />;
   }
+
   if (isError) {
-    <Error />;
+    return <Error />;
   }
 
   return (
@@ -60,4 +61,4 @@ const CartsList = () => {
   );
 };
 
-export default CartsList;
+export default CartLists;
