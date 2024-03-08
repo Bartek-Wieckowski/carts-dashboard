@@ -42,10 +42,10 @@
     @apply w-full h-screen px-2;
   }
   .sidebar-container {
-    @apply fixed top-0 left-0 z-40 w-full max-w-[100px] sm:max-w-[300px] h-screen overflow-y-auto custom-scrollbar;
+    @apply fixed top-0 left-0 z-40 w-full max-w-[100px] sm:max-w-[200px] md:max-w-[300px] h-screen overflow-y-auto custom-scrollbar;
   }
   .section-container {
-    @apply flex flex-col w-full h-full pl-[100px] sm:pl-[300px];
+    @apply flex flex-col w-full h-full pl-[100px] sm:pl-[200px] md:pl-[300px];
   }
   .flex-center {
     @apply flex justify-center items-center;
