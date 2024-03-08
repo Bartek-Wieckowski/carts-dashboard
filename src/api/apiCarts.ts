@@ -8,5 +8,13 @@ export async function getCarts(page: number = 1): Promise<CartResponse> {
   const res = await fetch(`${API_BASE_URL}?skip=${skip}&limit=${limit}`);
   const data = await res.json();
 
-  return data
+  return data;
+}
+
+export async function deleteCart(cartId: number) {
+  const res = await fetch(`${API_BASE_URL}/${cartId}`, {
+    method: 'DELETE',
+  });
+  const data = await res.json();
+  return data;
 }
