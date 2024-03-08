@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { Cart } from '../../types/Cart.type';
+import { useDeleteCart } from '../../api/carts/mutations/useDeleteCart';
 import Button from '../Button';
+import Loader from '../Loader';
 
 type CartListItemProps = {
   cart: Cart;
@@ -8,6 +10,7 @@ type CartListItemProps = {
 
 const CartListItem = ({ cart }: CartListItemProps) => {
   const [selectedItems, setSelectedItems] = useState<number[]>([]);
+  const { isDeleting, deleteCart, isDeleted } = useDeleteCart();
 
   const handleCheckboxChange = (itemId: number) => {
     setSelectedItems((prevState) => {
@@ -21,9 +24,11 @@ const CartListItem = ({ cart }: CartListItemProps) => {
     });
   };
 
+  if (isDeleting) return <Loader />;
+
   return (
     <tbody>
-      <tr className=" border-b bg-gray-800 border-gray-700  hover:bg-gray-600">
+      <tr className={`border-b bg-gray-800 border-gray-700  hover:bg-gray-600 ${isDeleted && 'hidden'}`}>
         <td className="w-4 p-4">
           <div className="flex items-center">
             <input
@@ -50,7 +55,7 @@ const CartListItem = ({ cart }: CartListItemProps) => {
               Details
             </Button>
             <div className={`${selectedItems.includes(cart.id) ? 'block' : 'hidden'}`}>
-              <Button onClick={() => console.log(`delete ${cart.id}`)} btnStyles="btnDelete">
+              <Button onClick={() => deleteCart(cart.id)} btnStyles="btnDelete">
                 Delete
               </Button>
             </div>
