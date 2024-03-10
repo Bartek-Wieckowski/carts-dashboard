@@ -7,10 +7,13 @@ import CartListTableHeader from './CartListTableHeader';
 import CartListPagination from './CartListPagination';
 import Error from '../Error';
 import Loader from '../Loader';
+import { useCartFromContext } from '../../hooks/useCartFromContext';
 
-const CartsList = () => {
+const CartLists = () => {
   const [currentPage, setCurrentPage] = useState(1);
-  const { isLoading, isError, carts, limit, total } = useCarts(currentPage);
+  const { isLoading, isError, carts: cartsFromQuery, limit, total } = useCarts(currentPage);
+  const { cartsData: addedCarts } = useCartFromContext();
+  const carts = addedCarts.concat(cartsFromQuery);
 
   const totalPages = Math.ceil(total / limit);
   const nextPage = currentPage < totalPages ? currentPage + 1 : null;
@@ -38,10 +41,11 @@ const CartsList = () => {
   };
 
   if (isLoading) {
-    <Loader type="spinner" />;
+    return <Loader />;
   }
+
   if (isError) {
-    <Error />;
+    return <Error />;
   }
 
   return (
@@ -60,4 +64,4 @@ const CartsList = () => {
   );
 };
 
-export default CartsList;
+export default CartLists;

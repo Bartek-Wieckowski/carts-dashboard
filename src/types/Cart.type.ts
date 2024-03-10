@@ -15,4 +15,12 @@ export type Cart = {
   userId: number;
   totalProducts: number;
   totalQuantity: number;
+} & { ownAddCart?: boolean };
+
+export type addCartProductQuantity = {
+  userId?: number;
+  products?: {
+    id: number;
+    quantity: number;
+  }[];
 };

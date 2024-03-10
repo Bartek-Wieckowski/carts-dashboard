@@ -1,6 +1,9 @@
 import { useState } from 'react';
 import { Cart } from '../../types/Cart.type';
+import { useDeleteCart } from '../../api/carts/mutations/useDeleteCart';
 import Button from '../Button';
+import Loader from '../Loader';
+import { useCartFromContext } from '../../hooks/useCartFromContext';
 
 type CartListItemProps = {
   cart: Cart;
@@ -8,6 +11,8 @@ type CartListItemProps = {
 
 const CartListItem = ({ cart }: CartListItemProps) => {
   const [selectedItems, setSelectedItems] = useState<number[]>([]);
+  const { isDeleting, deleteCart, isDeleted } = useDeleteCart();
+  const { dispatch } = useCartFromContext();
 
   const handleCheckboxChange = (itemId: number) => {
     setSelectedItems((prevState) => {
@@ -21,9 +26,23 @@ const CartListItem = ({ cart }: CartListItemProps) => {
     });
   };
 
+  const handleDeleteCart = (cart: Cart) => {
+    const shouldDelete = window.confirm('Are you sure you want to delete this cart?');
+
+    if (shouldDelete) {
+      if (cart.ownAddCart) {
+        dispatch({ type: 'REMOVE_CART', payload: cart.id });
+      } else {
+        deleteCart(cart.id);
+      }
+    }
+  };
+
+  if (isDeleting) return <Loader />;
+
   return (
     <tbody>
-      <tr className=" border-b bg-gray-800 border-gray-700  hover:bg-gray-600">
+      <tr className={`border-b bg-gray-800 border-gray-700  hover:bg-gray-600 ${isDeleted && 'hidden'}`}>
         <td className="w-4 p-4">
           <div className="flex items-center">
             <input
@@ -50,7 +69,7 @@ const CartListItem = ({ cart }: CartListItemProps) => {
               Details
             </Button>
             <div className={`${selectedItems.includes(cart.id) ? 'block' : 'hidden'}`}>
-              <Button onClick={() => console.log(`delete ${cart.id}`)} btnStyles="btnDelete">
+              <Button onClick={() => handleDeleteCart(cart)} btnStyles="btnDelete">
                 Delete
               </Button>
             </div>

@@ -7,7 +7,7 @@ const Homepage = lazy(() => import('../pages/Homepage'));
 const NotFound = lazy(() => import('../pages/NotFound'));
 const Cartspage = lazy(() => import('../pages/Cartspage'));
 const CartAdd = lazy(() => import('../components/cart/CartAdd'));
-const CartsList = lazy(() => import('../components/cart/CartsList'));
+const CartLists = lazy(() => import('../components/cart/CartLists'));
 const CartSingle = lazy(() => import('../components/cart/CartSingle'));
 const ErrorBoundary = lazy(() => import('../components/ErrorBoundary'));
 
@@ -16,7 +16,7 @@ export const router = createBrowserRouter(
     <Route element={<AppLayout />}>
       <Route path={ROUTES.home} element={<Homepage />} />
       <Route path={ROUTES.carts} element={<Cartspage />}>
-        <Route index element={<CartsList />} />
+        <Route index element={<CartLists />} />
         <Route path={ROUTES.cartAdd} element={<CartAdd />} />
         <Route path={ROUTES.cart(':id')} element={<CartSingle />} />
       </Route>
