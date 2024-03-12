@@ -11,6 +11,12 @@ export async function getCarts(page: number = 1): Promise<CartResponse> {
 
   return data;
 }
+export async function getSingleCart(cartId: number): Promise<Cart> {
+  const res = await fetch(`${API_BASE_URL}/${cartId}`);
+  const data = await res.json();
+
+  return data;
+}
 
 export async function addCart(values: addCartProductQuantity): Promise<Cart> {
   const res = await fetch(`${API_BASE_URL}/add`, {
