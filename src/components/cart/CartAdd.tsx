@@ -62,12 +62,25 @@ const CartAdd = () => {
       return product;
     });
 
+    const updatedQuantities = formik.values.products?.map((product, i) => {
+      if (i === index) {
+        return product?.quantity || 1
+      }
+      return formik.values.products?.[i]?.quantity
+    });
+
     const newFormikValues = {
       ...formikValues,
       products: updatedProducts,
     };
 
-    formik.setValues(newFormikValues);
+    formik.setValues({
+      ...newFormikValues,
+      products: newFormikValues.products?.map((product, i) => ({
+        ...product,
+        quantity: updatedQuantities?.[i] || 1,
+      })),
+    });
     setFormikValues(newFormikValues);
   };
 
